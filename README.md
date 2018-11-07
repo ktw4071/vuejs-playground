@@ -1,5 +1,8 @@
 # vueposting
 
+## Live Demo
+https://vuejs-beea9.firebaseapp.com
+
 ## Project setup
 ```
 npm install
