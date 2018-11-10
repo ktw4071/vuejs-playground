@@ -96,6 +96,12 @@
               task: 'Photo Album',
               description: 'Instead of using NodeJS routing function, Front-end handled uploading images/saving URL to database as it needs to be by referring API. Downnside is that image resizing cannot be done at serve side.',
               process: 'Complete'
+            },
+            {
+              date: '2018-11-11',
+              task: 'Photo Album',
+              description: 'Loading screen while photo is being uploaded',
+              process: 'Complete'
             }]
           };
         },

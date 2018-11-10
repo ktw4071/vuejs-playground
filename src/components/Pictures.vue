@@ -35,12 +35,12 @@
       <el-button @click="userUploadPicture" type="success">Upload picture</el-button> <br><br>
 
       <div align="center" class="progress_bar" > 
-      <el-progress :percentage="70" status="success"></el-progress>
+      <el-progress :percentage="loading_process" status="success"></el-progress>
       </div>
     </div>
 
 
-   <el-button @click="onCurrentUser" type="success">click me</el-button> <br><br>
+
     
     <br><br>
     
@@ -116,7 +116,8 @@
     			"https://images.pexels.com/photos/417344/pexels-photo-417344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
     			"https://www.cbc.ca/kidscbc2/content/the_feed/animals_polarbear-min.jpg"
     			],
-          selectedFile: null
+          selectedFile: null,
+          loading_process: 0
     		}
     	},
       components: {
@@ -188,49 +189,52 @@
           })            
           },
           userUploadPicture(){
-            if(!this.selectedFile.name){
+            if(this.selectedFile == null){
             this.$message({
                 showClose: true,
                 message: 'Select your picture first!',
                 type: 'error'
-              })
+              })            
             }
 
-            const ref = fb.storageRef.child('user/' + this.currentUser.uid + '/' + this.selectedFile.name)
-            ref.put(this.selectedFile)
-            .then(snapshot => {
-              this.$message({
-                showClose: true,
-                message: 'Thank you for uploading picture',
-                type: 'success'
+            else{              
+              const loading = this.$loading({
+                lock: true,
+                text: 'Uploading',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
               })
-              console.log('Uploaded file!');
 
-              snapshot.ref.getDownloadURL()
-              .then(downloadURL => {
-                console.log('File available at', downloadURL);
+              const ref = fb.storageRef.child('user/' + this.currentUser.uid + '/' + this.selectedFile.name)
 
-                //Update a document
-                // const addImageURL = fb.userPicturesCollection.doc(this.currentUser.uid)
-                // addImageURL.update({
-                //   img_url: downloadURL
-                // })
-
-                //Add a document in a array form
-                const addImageURL = fb.userPicturesCollection.doc(this.currentUser.uid)
-                addImageURL.update({
-                  img_array: fb.firebase.firestore.FieldValue.arrayUnion(downloadURL)
-                })
-            })
-              .catch(error => {
-                console.log("What is error? : " + error)
+              ref.put(this.selectedFile)      
+              .then(snapshot => {                
                 this.$message({
-                showClose: true,
-                message: 'Oops, Failed to upload picture',
-                type: 'error'
+                  showClose: true,
+                  message: 'Thank you for uploading picture',
+                  type: 'success'
+                })
+                loading.close();
+                console.log('Uploaded file!');
+
+                snapshot.ref.getDownloadURL()
+                .then(downloadURL => {
+                  console.log('File available at', downloadURL);              
+                  const addImageURL = fb.userPicturesCollection.doc(this.currentUser.uid)
+                  addImageURL.update({
+                    img_array: fb.firebase.firestore.FieldValue.arrayUnion(downloadURL)
+                  })
+                })
+                .catch(error => {
+                  console.log("What is error? : " + error)
+                  this.$message({
+                  showClose: true,
+                  message: 'Oops, Failed to upload picture',
+                  type: 'error'
+                })
               })
-              })
-          })
+            })              
+          }
         }
       }
     }
