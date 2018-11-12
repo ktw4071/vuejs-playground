@@ -10,8 +10,11 @@ const fb = require('./firebaseConfig.js')
 import './assets/scss/app.scss'
 import 'element-ui/lib/theme-chalk/index.css'
 
+//using English language setting
+import locale from 'element-ui/lib/locale/lang/en'
 
-Vue.use(ElementUI)
+Vue.use(ElementUI, { locale })
+// Vue.use(ElementUI)
 // Vue.use(VLazyImage)
 
 Vue.config.productionTip = false

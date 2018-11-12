@@ -2,12 +2,12 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 
 const  config = {
-    apiKey: "Your API KEY",
-    authDomain: "Your Auth Domain",
-    databaseURL: "Your Database URL",
-    projectId: "Your Project ID",
-    storageBucket: "Your Storage Bucket",
-    messagingSenderId: "Your Messaging Sender ID"
+    apiKey: "AIzaSyCUhG0TBAbYLuyLBeC6TWCt8E4X4nI_8Tc",
+    authDomain: "vuejs-beea9.firebaseapp.com",
+    databaseURL: "https://vuejs-beea9.firebaseio.com",
+    projectId: "vuejs-beea9",
+    storageBucket: "gs://vuejs-beea9.appspot.com",
+    messagingSenderId: "478227863483"
   };
 
 firebase.initializeApp(config)

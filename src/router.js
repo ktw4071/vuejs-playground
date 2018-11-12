@@ -7,6 +7,7 @@ import Dashboard from '@/components/Dashboard'
 import Settings from '@/components/Settings'
 import Charts from '@/components/Charts'
 import Pictures from '@/components/Pictures'
+import LegionMagazine from '@/components/LegionMagazine'
 
 Vue.use(Router)
 
@@ -50,6 +51,14 @@ const router = new Router({
 			path: '/pictures',
 			name: 'Pictures',
 			component: Pictures,
+			meta: {
+				requiresAuth: true
+			}
+		},
+		{
+			path: '/legionmagazine',
+			name: 'LegionMagazine',
+			component: LegionMagazine,
 			meta: {
 				requiresAuth: true
 			}

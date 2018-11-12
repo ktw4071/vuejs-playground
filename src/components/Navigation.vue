@@ -23,8 +23,11 @@
                         <el-table-column width="400" property="description" label="Description"></el-table-column>
                         <el-table-column width="100" property="process" label="Process"></el-table-column>
                       </el-table>
-                      <el-button type="success" slot="reference">Work History</el-button>
+                      <el-button type="success" slot="reference">Work History</el-button>      
+
                     </el-popover>
+
+                    <router-link to="LegionMagazine"><el-button  type="success">Legion Magazine</el-button></router-link>
 
                     <ul class="inline">
                         <li><router-link to="Pictures"><el-button type="primary">Pictures</el-button></router-link></li>
