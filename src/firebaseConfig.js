@@ -3,6 +3,8 @@ import 'firebase/firestore'
 
 const config = require('./firebaseConfig_Credentials.js')
 
+// Create firebaseConfig_Credentials.js that contains the following for Firebase API Config
+
 // const  config = {
 //     apiKey: "Your API Key",
 //     authDomain: "Your Domain",
@@ -11,6 +13,9 @@ const config = require('./firebaseConfig_Credentials.js')
 //     storageBucket: "Your Bucket",
 //     messagingSenderId: "Your Sender ID"
 //   };
+// export {
+// 	config
+// }
 
 firebase.initializeApp(config.config)
 
