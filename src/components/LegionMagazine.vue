@@ -33,27 +33,57 @@
   			console.log(event[0])
   			console.log(event[1])
 
-  			this.created_at_min = event[0] + start_date_adder
-  			this.created_at_max = event[1] + end_date_adder
+  			this.created_at_min = event[0] 
+  			this.created_at_max = event[1] 
 
   			console.log(this.created_at_min)
   			console.log(this.created_at_max)
         	},
 
         	downloadCSV(){
-        		axios.get('https://grand-thought-219600.appspot.com/taewoo/accounting-export', {
-        			params: {
-        				created_at_min: this.created_at_min,
-        				created_at_max: this.created_at_max
-        			},
-        			headers: {
-			        'Content-Type' : 'application/json'
-			        }
-        		})
+            // console.log("min: " + this.created_at_min)
+            // console.log("max: " + this.created_at_max)
+            if(this.created_at_min == null || this.created_at_max == null){
+            this.$message({
+                showClose: true,
+                message: 'Select your date range first!',
+                type: 'error'
+              })            
+            }
 
-        		.then(res => {
-        			console.log("csv succeed!")
-        		})
+            else{
+              const loading = this.$loading({
+                lock: true,
+                text: 'Downloading Your Excel file...',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
+              })
+
+            
+              const url = "https://grand-thought-219600.appspot.com/taewoo/accounting-export/" + this.created_at_min + '/' +this.created_at_max
+              console.log("url: " + url);
+          		axios.get(url, {
+          			// params: {
+          			// 	created_at_min: this.created_at_min,
+          			// 	created_at_max: this.created_at_max
+          			// },
+          			// headers: {
+  			        // 'Content-Type' : 'application/json'
+  			        // }
+          		})
+
+          		.then(res => {
+                 const url = window.URL.createObjectURL(new Blob([res.data]));
+                 const link = document.createElement('a');
+                 link.href = url;
+                 link.setAttribute('download', 'accounting-export_' + this.created_at_min + '_' + this.created_at_max +  '.csv'); //or any other extension
+                 document.body.appendChild(link);
+                 loading.close();
+                 link.click();
+
+          			console.log("csv succeed!")
+          		})
+            }
         	}
 
    		}
